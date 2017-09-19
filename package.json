@@ -1,6 +1,6 @@
 {
   "name": "rc-simple-sheet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React simple sheet",
   "keywords": [
     "react",
@@ -68,6 +68,7 @@
   ],
   "dependencies": {
     "babel-runtime": "^6.23.0",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.8"
   }
 }

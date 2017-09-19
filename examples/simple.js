@@ -10,8 +10,8 @@ class Test extends Component {
       selectionCell: [],
       value: [
         {
-          row: 4,
-          column: 5,
+          row: '4',
+          column: '5',
           render: ({ record, row, column }) => {
             // eslint-disable-next-line
             console.log('record', record, 'row', row, 'column', column);
@@ -19,8 +19,8 @@ class Test extends Component {
           },
         },
         {
-          row: 2,
-          column: 2,
+          row: '2',
+          column: '2',
           render: () => {
             return (<div>value</div>);
           },
@@ -40,13 +40,13 @@ class Test extends Component {
       rows: rowArr.map((elem, index) => {
         return {
           label: elem,
-          index,
+          index: `${index}`,
         };
       }),
       columns: 'ABCDEFG'.split('').map((elem, index) => {
         return {
           label: elem,
-          index,
+          index: `${index}`,
         };
       }),
       rowHeight: 30,

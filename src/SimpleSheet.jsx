@@ -73,6 +73,8 @@ class SimpleSheet extends Component {
       endColumnIndex: 0,
     };
 
+    this.countRowAndColumnIndexArr(props);
+
     this.handleGlobalMouseUp = this.handleRowCellMouseUp;
   }
 
@@ -89,6 +91,7 @@ class SimpleSheet extends Component {
       newState.selectionCell = nextProps.selectionCell;
     }
 
+    this.countRowAndColumnIndexArr(nextProps);
     this.setState(newState);
   }
 
@@ -116,9 +119,29 @@ class SimpleSheet extends Component {
     e.preventDefault();
   }
 
+  checkIsRepetition = (arr) => {
+    return 0 < _.filter(this.rowIndexArr, function (value, index, iteratee) {
+       return _.includes(iteratee, value, index + 1);
+    }).length;
+  }
+
+  countRowAndColumnIndexArr = (props = this.props) => {
+    this.rowIndexArr = _.map(props.rows, 'index');
+    this.columnIndexArr = _.map(props.columns, 'index');
+
+    if (this.checkIsRepetition(this.rowIndexArr) || this.checkIsRepetition(this.columnIndexArr)) {
+      // eslint-disable-next-line
+      console.error(`[${props.prefixCls}] row or column index must be unique, pleace check.`);
+    }
+  }
+
   countSelectionCell = ({ dragging = this.dragging }) => {
     if (dragging.ing) {
-      const { startRowIndex, startColumnIndex, endRowIndex, endColumnIndex } = dragging;
+      const { startRowIndex: startRowIndexOrigin, startColumnIndex: startColumnIndexOrigin, endRowIndex: endRowIndexOrigin, endColumnIndex: endColumnIndexOrigin } = dragging;
+      const startRowIndex = this.rowIndexArr.indexOf(startRowIndexOrigin);
+      const startColumnIndex = this.columnIndexArr.indexOf(startColumnIndexOrigin);
+      const endRowIndex = this.rowIndexArr.indexOf(endRowIndexOrigin);
+      const endColumnIndex= this.columnIndexArr.indexOf(endColumnIndexOrigin);
 
       const rangeStartRowIndex = _.min([startRowIndex, endRowIndex]);
       const rangeStartColumnIndex = _.min([startColumnIndex, endColumnIndex]);
@@ -133,8 +156,8 @@ class SimpleSheet extends Component {
         let rangeStartRowIndexCount = rangeStartRowIndex;
         while (rangeStartRowIndexCount <= rangeEndRowIndex) {
           const cellPosition = {
-            row: 1 * rangeStartRowIndexCount,
-            column: 1 * startColumnIndex,
+            row: this.rowIndexArr[rangeStartRowIndexCount],
+            column: this.columnIndexArr[startColumnIndex],
           };
           selectionCell.push(cellPosition);
           rangeStartRowIndexCount += 1;
@@ -144,8 +167,8 @@ class SimpleSheet extends Component {
         let rangeStartColumnIndexCount = rangeStartColumnIndex;
         while (rangeStartColumnIndexCount <= rangeEndColumnIndex) {
           const cellPosition = {
-            row: 1 * startRowIndex,
-            column: 1 * rangeStartColumnIndexCount,
+            row: this.rowIndexArr[startRowIndex],
+            column: this.columnIndexArr[rangeStartColumnIndexCount],
           };
           selectionCell.push(cellPosition);
           rangeStartColumnIndexCount += 1;
@@ -157,8 +180,8 @@ class SimpleSheet extends Component {
           let rangeStartColumnIndexCount = rangeStartColumnIndex;
           while (rangeStartColumnIndexCount <= rangeEndColumnIndex) {
             const cellPosition = {
-              row: 1 * rangeStartRowIndexCount,
-              column: 1 * rangeStartColumnIndexCount,
+              row: this.rowIndexArr[rangeStartRowIndexCount],
+              column: this.columnIndexArr[rangeStartColumnIndexCount],
             };
             selectionCell.push(cellPosition);
             rangeStartColumnIndexCount += 1;
@@ -201,8 +224,8 @@ class SimpleSheet extends Component {
   handleRowCellMouseDown = (e, { row, column }) => {
     this.preventDefault(e);
     const cellPosition = {
-      row: 1 * row.index,
-      column: 1 * column.index,
+      row: row.index,
+      column: column.index,
     };
     e.target.addEventListener('mouseup', this.handleRowCellMouseUp);
     this.dragging = {
@@ -270,8 +293,8 @@ class SimpleSheet extends Component {
         }
       </div>
       {
-        this.props.rows.map((row, index) => {
-          return (<div style={{ height: this.props.rowHeight }} className={`${prefixCls}-row ${prefixCls}-clearfix`} key={index}>
+        this.props.rows.map((row) => {
+          return (<div style={{ height: this.props.rowHeight }} className={`${prefixCls}-row ${prefixCls}-clearfix`} key={row.index}>
             <div style={{ width: this.props.labelCellWidth }} className={`${prefixCls}-row-cell ${prefixCls}-row-label-cell`}>{row.label}</div>
             {
               this.props.columns.map((column) => {
@@ -282,14 +305,15 @@ class SimpleSheet extends Component {
                   this.handleRowCellMouseOver(e, { row, column });
                 };
                 const findRule = {
-                  row: 1 * row.index,
-                  column: 1 * column.index,
+                  row: row.index,
+                  column: column.index,
                 };
                 const isSelected = _.find(selectionCell, findRule);
                 const record = _.find(this.state.value, findRule);
                 const rowCellSelectedClassName = `${prefixCls}-row-cell-selected ${this.props.rowSelectClassName || ''}`;
                 const className = `${isSelected ? rowCellSelectedClassName : ''} ${prefixCls}-row-cell`;
                 return (<div
+                  key={column.index}
                   style={{ width: this.props.cellWidth }}
                   className={className}
                   onMouseDown={handleRowCellMouseDown}

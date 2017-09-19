@@ -102,13 +102,13 @@ Online examples: [http://pchange.github.io/rc-simple-sheet/examples/](http://pch
           <td>rows</td>
           <td>array</td>
           <td>[{label: 1, index: 1, }, {label: 2, index: 2, }, ],</td>
-          <td>row define</td>
+          <td>row define, index must be unique</td>
         </tr>
         <tr>
           <td>columns</td>
           <td>array</td>
           <td>[{label: 1, index: 1, }, {label: 2, index: 2, }, ],</td>
-          <td>column define</td>
+          <td>column define, index must be unique</td>
         </tr>
         <tr>
           <td>ySelect</td>
