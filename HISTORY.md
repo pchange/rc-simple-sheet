@@ -1,6 +1,9 @@
 # History
 ---
 
+## 1.0.3 / 2017-09-19
+
+remove selectionCell repetition.
 
 ## 1.0.2 / 2017-09-19
 

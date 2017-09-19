@@ -190,8 +190,11 @@ class SimpleSheet extends Component {
         }
       }
 
+      const uniqSelectionCell = _.uniqBy(selectionCell, (elem) => {
+        return `(${elem.row}, ${elem.column})`;
+      });
       this.setState({
-        selectionCell,
+        selectionCell: uniqSelectionCell,
       }, () => {
         this.onSelectionCellChange();
       });
