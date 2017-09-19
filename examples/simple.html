@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-simple-sheet@1.0.0</title>
+  <title>simple.js - example - rc-simple-sheet@1.0.1</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-simple-sheet@1.0.0</h1>
+      <h1>rc-simple-sheet@1.0.1</h1>
 
       <p>React simple sheet</p>
     </div>
@@ -281,8 +281,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       selectionCell: [],
       value: [
         {
-          row: <span class="hljs-number">4</span>,
-          column: <span class="hljs-number">5</span>,
+          row: <span class="hljs-string">'4'</span>,
+          column: <span class="hljs-string">'5'</span>,
           render: ({ record, row, column }) =&gt; {
             <span class="hljs-comment">// eslint-disable-next-line</span>
             <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'record'</span>, record, <span class="hljs-string">'row'</span>, row, <span class="hljs-string">'column'</span>, column);
@@ -290,8 +290,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
           },
         },
         {
-          row: <span class="hljs-number">2</span>,
-          column: <span class="hljs-number">2</span>,
+          row: <span class="hljs-string">'2'</span>,
+          column: <span class="hljs-string">'2'</span>,
           render: () =&gt; {
             <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>value<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
           },
@@ -311,13 +311,13 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       rows: rowArr.map((elem, index) =&gt; {
         <span class="hljs-keyword">return</span> {
           label: elem,
-          index,
+          index: <span class="hljs-string">`<span class="hljs-subst">${index}</span>`</span>,
         };
       }),
       columns: <span class="hljs-string">'ABCDEFG'</span>.split(<span class="hljs-string">''</span>).map((elem, index) =&gt; {
         <span class="hljs-keyword">return</span> {
           label: elem,
-          index,
+          index: <span class="hljs-string">`<span class="hljs-subst">${index}</span>`</span>,
         };
       }),
       rowHeight: <span class="hljs-number">30</span>,
