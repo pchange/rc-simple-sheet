@@ -10743,8 +10743,11 @@ var _initialiseProps = function _initialiseProps() {
         }
       }
 
+      var uniqSelectionCell = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(selectionCell, function (elem) {
+        return '(' + elem.row + ', ' + elem.column + ')';
+      });
       _this3.setState({
-        selectionCell: selectionCell
+        selectionCell: uniqSelectionCell
       }, function () {
         _this3.onSelectionCellChange();
       });
